@@ -17,13 +17,13 @@ set :branch, 'master'
 set :keep_releases,  10
 
 # Optional settings:
-set :user, 'xiaoyu'          # Username in the server to SSH to.
+# set :user, 'root'          # Username in the server to SSH to.
 #   set :port, '30000'           # SSH port number.
 #   set :forward_agent, true     # SSH forward_agent.
 
 # shared dirs and files will be symlinked into the app-folder by the 'deploy:link_shared_paths' step.
 # set :shared_dirs, fetch(:shared_dirs, []).push('somedir')
-set :shared_files, fetch(:shared_files, []).push('config/puma.rb', 'config/secrets.yml.key')
+set :shared_files, fetch(:shared_files, []).push('config/secrets.yml.key')
 
 # This task is the environment that is loaded for all remote run commands, such as
 # `mina deploy` or `mina rake`.
@@ -40,8 +40,12 @@ end
 # All paths in `shared_dirs` and `shared_paths` will be created on their own.
 task :setup do
   # command %{rbenv install 2.3.0}
-  command %[touch "#{fetch(:deploy_to)}/shared/config/puma.rb"]
-  command  %[echo "-----> Be sure to edit 'shared/config/puma.rb'."]
+  command %[mkdir -p "#{fetch(:deploy_to)}/shared/tmp/pids"]
+  command %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/shared/tmp/pids"]
+  command %[mkdir -p "#{fetch(:deploy_to)}/shared/tmp/sockets"]
+  command %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/shared/tmp/sockets"]
+  command %[mkdir -p "#{fetch(:deploy_to)}/shared/tmp/log"]
+  command %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/shared/tmp/log"]
   command %[touch "#{fetch(:deploy_to)}/shared/config/secrets.yml.key"]
   command  %[echo "-----> Be sure to edit 'shared/config/secrets.yml.key'."]
 end
