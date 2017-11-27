@@ -10,7 +10,7 @@ require 'mina/git'
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :application_name, 'talking_robot'
-set :domain, 'foobar.com'
+set :domain, '172.104.126.234'
 set :deploy_to, '/var/www/talking_robot'
 set :repository, 'git://pagood/talking_robot'
 set :branch, 'master'
@@ -23,7 +23,7 @@ set :user, 'xiaoyu'          # Username in the server to SSH to.
 
 # shared dirs and files will be symlinked into the app-folder by the 'deploy:link_shared_paths' step.
 # set :shared_dirs, fetch(:shared_dirs, []).push('somedir')
-set :shared_files, fetch(:shared_files, []).push('config/puma.rb', 'config/secrets.yml.key', 'config/puma.sock')
+set :shared_files, fetch(:shared_files, []).push('config/puma.rb', 'config/secrets.yml.key')
 
 # This task is the environment that is loaded for all remote run commands, such as
 # `mina deploy` or `mina rake`.
@@ -44,8 +44,6 @@ task :setup do
   command  %[echo "-----> Be sure to edit 'shared/config/puma.rb'."]
   command %[touch "#{fetch(:deploy_to)}/shared/config/secrets.yml.key"]
   command  %[echo "-----> Be sure to edit 'shared/config/secrets.yml.key'."]
-  command %[touch "#{fetch(:deploy_to)}/shared/config/puma.sock"]
-  command  %[echo "-----> Be sure to edit 'shared/config/puma.sock'."]
 end
 
 desc "Deploys the current version to the server."
@@ -63,10 +61,11 @@ task :deploy do
     invoke :'deploy:cleanup'
 
     on :launch do
-      in_path(fetch(:current_path)) do
-        command %{mkdir -p tmp/}
-        command %{touch tmp/restart.txt}
-      end
+      # in_path(fetch(:current_path)) do
+      #   command %{mkdir -p tmp/}
+      #   command %{touch tmp/restart.txt}
+      # end
+      invoke :'puma:phased_restart'
     end
   end
 
