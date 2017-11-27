@@ -1,0 +1,4 @@
+---
+pid: 3270
+control_url: unix:///var/folders/py/gcwdfspx49x1g1j3n2_q11zh0000gn/T/puma-status-1511773694078-3270
+control_auth_token: d96c149fc91877582461307a4f24b16e

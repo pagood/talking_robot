@@ -16,7 +16,13 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+shared/log/*
 
 .byebug_history
 
-/config
+#Ignore puma config
+config/puma.rb
+
+# Ignore encrypted secrets key file.
+config/secrets.yml.key
+
