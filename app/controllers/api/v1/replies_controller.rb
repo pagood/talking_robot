@@ -19,6 +19,25 @@ module Api
 					render plain: 'server errors' and return
 				end
 			end
+
+			def create
+				# doc = Nokogiri::XML(request.body.read)
+				# puts doc.child
+				params = Hash.from_xml(request.body.read)['xml']
+				#TODO log message
+				to_user = params['FromUserName']
+        from_user = params['ToUserName']
+        content = params['Content']
+				case params['MsgType']
+				when 'text'
+					reply = TextMessage.new(to_user, from_user, content)
+					render plain: reply.to_xml and return
+				else
+				#TODO other types message
+					render plain: 'success' and return 
+				end
+			end
 		end
 	end 
 end
+
