@@ -1,7 +1,8 @@
 require 'mina/rails'
 require 'mina/git'
+require 'mina/puma'
 # require 'mina/rbenv'  # for rbenv support. (https://rbenv.org)
-# require 'mina/rvm'    # for rvm support. (https://rvm.io)
+require 'mina/rvm'    # for rvm support. (https://rvm.io)
 
 # Basic settings:
 #   domain       - The hostname to SSH to.
@@ -12,12 +13,12 @@ require 'mina/git'
 set :application_name, 'talking_robot'
 set :domain, '172.104.126.234'
 set :deploy_to, '/var/www/talking_robot'
-set :repository, 'git://pagood/talking_robot'
+set :repository, 'git@github.com:pagood/talking_robot.git'
 set :branch, 'master'
 set :keep_releases,  10
 
 # Optional settings:
-# set :user, 'root'          # Username in the server to SSH to.
+set :user, 'xiaoyu'          # Username in the server to SSH to.
 #   set :port, '30000'           # SSH port number.
 #   set :forward_agent, true     # SSH forward_agent.
 
@@ -33,7 +34,7 @@ task :environment do
   # invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  # invoke :'rvm:use', 'ruby-1.9.3-p125@default'
+  invoke :'rvm:use', 'ruby-2.4.0@default'
 end
 
 # Put any custom commands you need to run at setup
@@ -69,7 +70,8 @@ task :deploy do
       #   command %{mkdir -p tmp/}
       #   command %{touch tmp/restart.txt}
       # end
-      invoke :'puma:phased_restart'
+      invoke :'puma:stop'
+      invoke :'puma:start'
     end
   end
 
