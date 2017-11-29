@@ -16,7 +16,7 @@ class TalkingProxy
 		# Import the classes you want to use into a Ruby variable
 		# specify the full package path to the classes.
 		nn = Rjb::import('jar.NN')
-		@nn_instance = nn.new("#{Rails.root}/tmp")
+		@nn_instance = nn.new("#{Rails.root}/tmp/")
   end
 end
 
