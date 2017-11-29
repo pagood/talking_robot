@@ -13,7 +13,7 @@ class TextMessage
 		self.create_time = Time.now.to_i
 		self.msg_type = 'text'
 		#TODO
-		self.content = '美滋滋'
+		self.content = $talking_proxy.get_response(content).to_s
 		#my wechat account 
 		self.to_user_name = to_user
 		self.from_user_name = from_user

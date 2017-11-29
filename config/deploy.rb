@@ -23,8 +23,8 @@ set :user, 'xiaoyu'          # Username in the server to SSH to.
 #   set :forward_agent, true     # SSH forward_agent.
 
 # shared dirs and files will be symlinked into the app-folder by the 'deploy:link_shared_paths' step.
-# set :shared_dirs, fetch(:shared_dirs, []).push('somedir')
-set :shared_files, fetch(:shared_files, []).push('config/secrets.yml.key')
+set :shared_dirs, fetch(:shared_dirs, []).push('tmp/model')
+set :shared_files, fetch(:shared_files, []).push('config/secrets.yml.key','tmp/word_to_index.txt','vendor/lambda-java-example-0.0.1-SNAPSHOT.jar')
 
 # This task is the environment that is loaded for all remote run commands, such as
 # `mina deploy` or `mina rake`.
