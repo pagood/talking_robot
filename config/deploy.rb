@@ -34,7 +34,7 @@ task :environment do
   # invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  invoke :'rvm:use', 'ruby-2.4.0@default'
+  invoke :'rvm:use', 'ruby-2.4.0'
 end
 
 # Put any custom commands you need to run at setup
@@ -51,10 +51,21 @@ task :setup do
   command  %[echo "-----> Be sure to edit 'shared/config/secrets.yml.key'."]
 end
 
+
+task :env do                                                                                                                                                                                                
+  command %[echo "-----> Loading environment"]
+  command %[source "/etc/profile"]
+    #{echo_cmd %[source ~/.bash_profile]}
+  
+end
+
 desc "Deploys the current version to the server."
 task :deploy do
   # uncomment this line to make sure you pushed your local branch to the remote origin
   # invoke :'git:ensure_pushed'
+
+  invoke :env
+
   deploy do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
