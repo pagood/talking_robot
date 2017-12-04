@@ -1,7 +1,7 @@
 if ENV['RAILS_ENV'] == 'production'
 	# Change to match your CPU core count
 	workers 1
-	preload_app!
+	# preload_app!
 	# Min and Max threads per worker
 	threads 1, 6
 
